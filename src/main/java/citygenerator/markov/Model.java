@@ -1,5 +1,7 @@
 package citygenerator.markov;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.*;
 
 public class Model {
@@ -8,7 +10,6 @@ public class Model {
 
     private int order;
     private float prior;
-    private String context;
     private ArrayList<String> alphabet;
     private Stack<String> data;
     private Map<String, ArrayList<String>> observations;
@@ -17,21 +18,7 @@ public class Model {
     public long seed = 0;
     public Random rand = new Random(seed);
 
-    public Model(Stack<String> data, int order, float prior, ArrayList<String> alphabet, String context) {
-        this.order = order;
-        this.prior = prior;
-        this.alphabet = alphabet;
-        this.data = data;
-        this.context = context;
-    }
-
-    public Model(String[] data, int order, float prior, ArrayList<String> alphabet, String context) {
-        this.order = order;
-        this.prior = prior;
-        this.alphabet = alphabet;
-        this.data = convertStringArrayToStack(data);
-        this.context = context;
-    }
+    protected Model(){ }
 
     public Model(Stack<String> data, int order, float prior, ArrayList<String> alphabet) {
         this.order = order;
@@ -114,18 +101,17 @@ public class Model {
         });
     }
 
-    protected int countMatches(ArrayList<String> arr, String v) {
+    public int countMatches(ArrayList<String> arr, String v) {
         if (arr == null) {
             return 0;
         }
-
-        int i = 0;
-        for (String s : arr) {
-            if (s == v) {
-                i++;
+        int occurrences = 0;
+        for(String s : arr) {
+            if(StringUtils.countMatches(v, s) > 0){
+                occurrences++;
             }
         }
-        return i;
+        return occurrences;
     }
 
     protected int selectIndex(ArrayList<Float> chain) {
@@ -138,7 +124,9 @@ public class Model {
         }
 
         for (int i = 0; i < totals.size(); i++) {
-            if (this.rand.nextInt(MAX_INT) < totals.get(i)) {
+            float rand = this.rand.nextFloat() * accumulator;
+            float currentTotal = totals.get(i);
+            if (rand < currentTotal) {
                 return i;
             }
         }
@@ -152,5 +140,9 @@ public class Model {
             stack.push(string[length]);
         }
         return stack;
+    }
+
+    public void setSeed(long seed) {
+        this.seed = seed;
     }
 }
