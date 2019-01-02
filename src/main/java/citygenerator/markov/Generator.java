@@ -44,7 +44,35 @@ public class Generator {
     }
 
     public String generate() {
-        return null;
+        StringBuilder sb = new StringBuilder();
+        String word = "";
+        Character letter;
+        for(int i = 0; i < order; i++) {
+            sb.append("#");
+        }
+        word = sb.toString();
+        letter = getLetter(word);
+        while(letter != '#') {
+            if(letter != null) {
+                word += letter;
+            }
+            letter = getLetter(word);
+        }
+        return word;
     }
 
+    public Character getLetter(String context) {
+        String letter = null;
+        String subcontext = context.substring(context.length() - order, context.length());
+        for (Model model : models) {
+            letter = model.generate(context);
+            if(letter == null){
+                context = context.substring(1);
+            }
+            else {
+                break;
+            }
+        }
+        return letter.charAt(0);
+    }
 }
