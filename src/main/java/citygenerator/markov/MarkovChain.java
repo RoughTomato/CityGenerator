@@ -20,15 +20,5 @@ public class MarkovChain {
         this.maxLength = maxLength;
     }
 
-    public String generate() {
-        return null;
-    }
 
-    protected String[] ngrams() {
-        return null;
-    }
-
-    protected Tree buildTree() {
-        return null;
-    }
 }
