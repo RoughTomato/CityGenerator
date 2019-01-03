@@ -20,7 +20,7 @@ public class MarkovModelTest extends Model {
 
     @Before
     public void setUp() throws Exception {
-        order = 0;
+        order = 8;
         prior = 0;
         alphabet = new ArrayList<>();
         data = new Stack<>();
@@ -29,6 +29,7 @@ public class MarkovModelTest extends Model {
 
     @Test
     public void createModel() {
+        super.createModel();
     }
 
     @Test
@@ -41,6 +42,11 @@ public class MarkovModelTest extends Model {
 
     @Test
     public void train() {
+        this.data.push("TEST");
+        this.data.push("DATA");
+        this.data.push("TESTING");
+        this.data.push("WORDS");
+        model.train();
     }
 
     @Test
@@ -73,15 +79,17 @@ public class MarkovModelTest extends Model {
         Assert.assertEquals(2, super.countMatches(arr, v));
     }
 
+    /* I am not 100% sure about whether this method works correctly yet.
+    *  This test only proves that it works as intended for this particular case
+    *  I'll come back to it while I understand a bit more.*/
     @Test
     public void selectIndex() {
         ArrayList<Float> chain = new ArrayList<>();
         chain.add(0.2f);
         chain.add(0.8f);
-        chain.add(0.3f);
-        super.seed = 12345; //1. 1569741360 2. 1785505948 3. 516548029
-
-        System.out.println(super.selectIndex(chain));
+        chain.add(0.1f);
+        super.setSeed(12345);
+        Assert.assertEquals(1, super.selectIndex(chain));
     }
 
     @Test

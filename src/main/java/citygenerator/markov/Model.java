@@ -5,9 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.*;
 
 public class Model {
-
-    private final int MAX_INT = 2147483647;
-
+    
     private int order;
     private float prior;
     private ArrayList<String> alphabet;
@@ -15,8 +13,8 @@ public class Model {
     private Map<String, ArrayList<String>> observations;
     private Map<String, ArrayList<Float>> chains;
 
-    public long seed = 0;
-    public Random rand = new Random(seed);
+    private long seed = 0;
+    private Random rand = new Random(seed);
 
     protected Model(){ }
 
@@ -25,6 +23,8 @@ public class Model {
         this.prior = prior;
         this.alphabet = alphabet;
         this.data = data;
+        observations = new HashMap<>();
+        chains = new HashMap<>();
     }
 
     public Model(String[] data, int order, float prior, ArrayList<String> alphabet) {
@@ -32,6 +32,8 @@ public class Model {
         this.prior = prior;
         this.alphabet = alphabet;
         this.data = convertStringArrayToStack(data);
+        observations = new HashMap<>();
+        chains = new HashMap<>();
     }
 
     public void createModel() {
@@ -60,7 +62,7 @@ public class Model {
         while(data.size() != 0) {
             String string = data.pop();
             StringBuilder sb = new StringBuilder(string);
-            ArrayList<String> value = new ArrayList<>();
+            ArrayList<String> value;
 
             for(int repeat = 0; repeat < this.order; repeat++) {
                 sb.insert(0,'#');
@@ -70,13 +72,12 @@ public class Model {
 
             for(int i = 0; i < string.length()-this.order; i++) {
                 String key = string.substring(i, i + this.order);
-                try {
-                    value = observations.get(key);
-                } catch (IndexOutOfBoundsException | NullPointerException e) {
+                value = observations.get(key);
+                if(value == null) {
+                    value = new ArrayList<>();
                     observations.replace(key, value);
-                } finally {
-                    value.add(Character.toString(string.charAt(i + this.order)));
                 }
+                value.add(Character.toString(string.charAt(i + this.order)));
             }
         }
     }
