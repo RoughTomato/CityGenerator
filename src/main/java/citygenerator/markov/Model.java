@@ -5,7 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.*;
 
 public class Model {
-    
+
     private int order;
     private float prior;
     private ArrayList<String> alphabet;
@@ -44,12 +44,14 @@ public class Model {
 
     public String generate(String context) {
         ArrayList<Float> chain;
-        try {
-           chain = this.chains.get(context);
-        } catch (IndexOutOfBoundsException | NullPointerException e) {
-           return null;
+        chain = this.chains.get(context);
+
+        if(chain == null) {
+            return null;
         }
+        else {
             return alphabet.get(selectIndex(chain));
+        }
     }
 
     public void retrain(Stack<String> data) {
@@ -85,19 +87,15 @@ public class Model {
     protected void buildChains() {
         chains = new HashMap<>();
         observations.entrySet().stream().forEach((entry) -> {
-            ArrayList<Float> value = new ArrayList<>();
+            ArrayList<Float> value;
             String context = entry.getKey();
             for(String prediction : alphabet) {
-                try {
-                    value = chains.get(context);
-                }
-                catch (IndexOutOfBoundsException | NullPointerException e) {
+                value = chains.get(context);
+                if(value == null) {
                     value = new ArrayList<>();
                     chains.replace(context, value);
                 }
-                finally {
-                    value.add(prior + countMatches(observations.get(context), prediction));
-                }
+                value.add(prior + countMatches(observations.get(context), prediction));
             }
         });
     }

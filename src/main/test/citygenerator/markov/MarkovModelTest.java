@@ -34,6 +34,17 @@ public class MarkovModelTest extends Model {
 
     @Test
     public void generate() {
+        this.data.push("TEST");
+        this.data.push("DATA");
+        this.data.push("TESTING");
+        this.data.push("WORDS");
+        this.prior = 0.3f;
+        this.alphabet.add("A");
+        this.alphabet.add("B");
+        String context = "AADDEEGINORSSSTTTTTW";
+
+        model.createModel();
+        Assert.assertNotNull(model.generate(context));
     }
 
     @Test
@@ -51,6 +62,12 @@ public class MarkovModelTest extends Model {
 
     @Test
     public void buildChains() {
+        this.data.push("TEST");
+        this.data.push("DATA");
+        this.data.push("TESTING");
+        this.data.push("WORDS");
+        model.train();
+        model.buildChains();
     }
 
     @Test
