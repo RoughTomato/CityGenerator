@@ -50,7 +50,8 @@ public class Model {
             return null;
         }
         else {
-            return alphabet.get(selectIndex(chain));
+            String value = alphabet.get(selectIndex(chain));
+            return value;
         }
     }
 
@@ -77,7 +78,7 @@ public class Model {
                 value = observations.get(key);
                 if(value == null) {
                     value = new ArrayList<>();
-                    observations.replace(key, value);
+                    observations.put(key, value);
                 }
                 value.add(Character.toString(string.charAt(i + this.order)));
             }
@@ -86,18 +87,30 @@ public class Model {
 
     protected void buildChains() {
         chains = new HashMap<>();
-        observations.entrySet().stream().forEach((entry) -> {
-            ArrayList<Float> value;
-            String context = entry.getKey();
-            for(String prediction : alphabet) {
+        ArrayList<Float> value;
+        for(Map.Entry<String, ArrayList<String>> item : observations.entrySet()) {
+            String context = item.getKey();
+            for (String prediction : alphabet) {
                 value = chains.get(context);
-                if(value == null) {
+                if (value == null) {
                     value = new ArrayList<>();
-                    chains.replace(context, value);
+                    chains.put(context, value);
                 }
                 value.add(prior + countMatches(observations.get(context), prediction));
             }
-        });
+        }
+//        observations.entrySet().stream().forEach((entry) -> {
+//            ArrayList<Float> value;
+//            String context = entry.getKey();
+//            for(String prediction : alphabet) {
+//                value = chains.get(context);
+//                if(value == null) {
+//                    value = new ArrayList<>();
+//                    chains.replace(context, value);
+//                }
+//                value.add(prior + countMatches(observations.get(context), prediction));
+//            }
+//        });
     }
 
     public int countMatches(ArrayList<String> arr, String v) {

@@ -41,9 +41,14 @@ public class MarkovModelTest extends Model {
         this.prior = 0.3f;
         this.alphabet.add("A");
         this.alphabet.add("B");
-        String context = "AADDEEGINORSSSTTTTTW";
+        this.alphabet.add("D");
+        this.alphabet.add("T");
+        this.alphabet.add("S");
+        this.alphabet.add("R");
+        String context = "####TEST";
 
         model.createModel();
+        model.buildChains();
         Assert.assertNotNull(model.generate(context));
     }
 
