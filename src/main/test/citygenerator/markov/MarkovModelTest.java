@@ -49,7 +49,7 @@ public class MarkovModelTest extends Model {
 
         model.createModel();
         model.buildChains();
-        Assert.assertNotNull(model.generate(context));
+        Assert.assertEquals("A", model.generate(context));
     }
 
     @Test

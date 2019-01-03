@@ -99,18 +99,6 @@ public class Model {
                 value.add(prior + countMatches(observations.get(context), prediction));
             }
         }
-//        observations.entrySet().stream().forEach((entry) -> {
-//            ArrayList<Float> value;
-//            String context = entry.getKey();
-//            for(String prediction : alphabet) {
-//                value = chains.get(context);
-//                if(value == null) {
-//                    value = new ArrayList<>();
-//                    chains.replace(context, value);
-//                }
-//                value.add(prior + countMatches(observations.get(context), prediction));
-//            }
-//        });
     }
 
     public int countMatches(ArrayList<String> arr, String v) {
