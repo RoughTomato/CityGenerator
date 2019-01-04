@@ -17,7 +17,6 @@ public class MarkovModelTest extends Model {
     private ArrayList<String> alphabet;
     private Stack<String> data;
 
-
     @Before
     public void setUp() throws Exception {
         order = 8;

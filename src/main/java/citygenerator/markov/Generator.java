@@ -1,9 +1,6 @@
 package citygenerator.markov;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Stack;
-import citygenerator.markov.Model;
+import java.util.*;
 
 public class Generator {
 
@@ -15,6 +12,8 @@ public class Generator {
      */
     private ArrayList<Model> models;
 
+    protected Generator() { }
+
     public Generator(int order, float prior, Stack<String> data) {
         this.order = order;
         this.prior = prior;
@@ -22,24 +21,45 @@ public class Generator {
     }
 
     public void createGenerator() {
-        ArrayList<Character> letter = new ArrayList<>();
-        for(String word : data) {
-            for(int i = 0; i < word.length(); i++) {
-                letter.add(word.charAt(i));
+        ArrayList<String> letters = new ArrayList<>();
+        {
+            int count = 0;
+            while (( count < data.size() ))
+            {
+                String word = data.get(count);
+                ++count;
+                {
+                    int wordsCount = 0;
+                    while (( wordsCount < word.length() ))
+                    {
+                        wordsCount++;
+                        letters.add(Character.toString(word.charAt(wordsCount)));
+                    }
+                }
             }
-        }
-        Collections.sort(letter);
-        ArrayList<String> domain = new ArrayList<>();
-        StringBuilder sb = new StringBuilder();
-        for(Character c : letter) {
-            sb.append(c);
-        }
-        domain.add(sb.toString());
-        domain.add(0,"#");
 
-        models = new ArrayList<>();
-        for(int i = 0; i < this.order; i++) {
-            models.add(new Model(this.data, (this.order - 1), this.prior, domain));
+            //remove duplicates
+            Set<String> set = new LinkedHashSet<>();
+            set.addAll(letters);
+            letters.clear();
+            letters.addAll(set);
+            Collections.sort(letters);
+
+            ArrayList<String> domain = new ArrayList<>();
+            domain.addAll(letters);
+            domain.add(0, "#");
+            models = new ArrayList<>();
+            {
+                int counter = 0;
+                while (( counter < this.order ))
+                {
+                    counter++;
+                    Stack<String> dataCopy = (Stack<String>) data.clone();
+                    Model model = new Model(dataCopy , (this.order - counter), this.prior, domain);
+                    model.createModel();
+                    models.add(model);
+                }
+            }
         }
     }
 
@@ -63,7 +83,7 @@ public class Generator {
 
     public Character getLetter(String context) {
         String letter = null;
-        String subcontext = context.substring(context.length() - order, context.length());
+        context = context.substring(context.length() - order, context.length());
         for (Model model : models) {
             letter = model.generate(context);
             if(letter == null){

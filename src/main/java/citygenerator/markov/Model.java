@@ -67,12 +67,15 @@ public class Model {
             StringBuilder sb = new StringBuilder(string);
             ArrayList<String> value;
 
-            for(int repeat = 0; repeat < this.order; repeat++) {
-                sb.insert(0,'#');
+            String output = "";
+            {
+                int counter = 0;
+                while ( counter < this.order ) {
+                    counter++;
+                    output += "#";
+                }
             }
-            sb.append('#');
-            string = sb.toString();
-
+            string = (output + string) + "#";
             for(int i = 0; i < string.length()-this.order; i++) {
                 String key = string.substring(i, i + this.order);
                 value = observations.get(key);
@@ -89,8 +92,8 @@ public class Model {
         chains = new HashMap<>();
         ArrayList<Float> value;
         for(Map.Entry<String, ArrayList<String>> item : observations.entrySet()) {
-            String context = item.getKey();
             for (String prediction : alphabet) {
+                String context = item.getKey();
                 value = chains.get(context);
                 if (value == null) {
                     value = new ArrayList<>();
