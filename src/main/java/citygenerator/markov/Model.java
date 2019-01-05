@@ -46,7 +46,7 @@ public class Model {
         ArrayList<Float> chain;
         chain = this.chains.get(context);
 
-        if(chain == null) {
+        if (chain == null) {
             return null;
         }
         else {
@@ -62,24 +62,22 @@ public class Model {
     }
 
     public void train() {
-        while(data.size() != 0) {
+        while (data.size() != 0) {
             String string = data.pop();
             StringBuilder sb = new StringBuilder(string);
             ArrayList<String> value;
 
             String output = "";
-            {
-                int counter = 0;
-                while ( counter < this.order ) {
-                    counter++;
-                    output += "#";
-                }
+            int counter = 0;
+            while (counter < this.order) {
+                counter++;
+                output += "#";
             }
             string = (output + string) + "#";
-            for(int i = 0; i < string.length()-this.order; i++) {
+            for (int i = 0; i < string.length()-this.order; i++) {
                 String key = string.substring(i, i + this.order);
                 value = observations.get(key);
-                if(value == null) {
+                if (value == null) {
                     value = new ArrayList<>();
                     observations.put(key, value);
                 }
@@ -91,7 +89,7 @@ public class Model {
     protected void buildChains() {
         chains = new HashMap<>();
         ArrayList<Float> value;
-        for(Map.Entry<String, ArrayList<String>> item : observations.entrySet()) {
+        for (Map.Entry<String, ArrayList<String>> item : observations.entrySet()) {
             for (String prediction : alphabet) {
                 String context = item.getKey();
                 value = chains.get(context);
@@ -109,8 +107,8 @@ public class Model {
             return 0;
         }
         int occurrences = 0;
-        for(String s : arr) {
-            if(StringUtils.countMatches(v, s) > 0){
+        for (String s : arr) {
+            if (StringUtils.countMatches(v, s) > 0){
                 occurrences++;
             }
         }
@@ -139,7 +137,7 @@ public class Model {
 
     protected Stack<String> convertStringArrayToStack(String[] string) {
         Stack<String> stack = new Stack<>();
-        for(int length = string.length; length != 0; length--) {
+        for (int length = string.length; length != 0; length--) {
             stack.push(string[length]);
         }
         return stack;

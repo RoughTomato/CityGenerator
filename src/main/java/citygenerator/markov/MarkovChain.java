@@ -1,24 +1,42 @@
 package citygenerator.markov;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Stack;
 
 public class MarkovChain {
 
-    private String[] sequences = {};
-    private int n = 2;
-    private int maxLength = 20;
+    private int order = 8;
+    private float prior = 0.3f;
+    private Stack<String> data;
 
-    public MarkovChain() {}
+    private Generator generator;
 
-    public MarkovChain(String[] sequences) {
-        this.sequences = Arrays.copyOf(sequences, sequences.length);
+    public MarkovChain(Stack<String> data, int order, float prior) {
+        this.data = data;
+        this.order = order;
+        this.prior = prior;
+        generator = new Generator(order, prior, data);
+        generator.createGenerator();
     }
 
-    public MarkovChain(String[] sequences, int n, int maxLength) {
-        this.sequences = Arrays.copyOf(sequences, sequences.length);
-        this.n = n;
-        this.maxLength = maxLength;
+    public MarkovChain(ArrayList<String> data, int order, float prior) {
+        this.data = new Stack<>();
+        this.data.addAll(data);
+        this.order = order;
+        this.prior = prior;
+        generator = new Generator(this.order, this.prior, this.data);
+        generator.createGenerator();
     }
+
+    public String generateName() {
+        String name = generator.generate();
+        name = name.replaceAll("#","");
+        return name;
+    }
+
+
+
+
 
 
 }
