@@ -1,7 +1,10 @@
 package citygenerator.markov;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import citygenerator.util.ListTools;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Stack;
 
 public class Generator {
 
@@ -21,11 +24,12 @@ public class Generator {
         this.data = data;
     }
 
-    protected static <E> List<E> removeDuplicates(List<E> list) {
-        return list.stream().distinct().collect(Collectors.toList());
+    public void createGenerator() {
+        ArrayList<String> letters = generateLetters();
+        this.models = generateModels(letters);
     }
 
-    public void createGenerator() {
+    private ArrayList<String> generateLetters() {
         ArrayList<String> letters = new ArrayList<>();
         int dataCount = 0;
         while (dataCount < data.size())
@@ -34,25 +38,28 @@ public class Generator {
             ++dataCount;
             for (Character c : word.toCharArray()){
                 letters.add(c.toString());
-
             }
         }
-
-        letters = (ArrayList<String>) removeDuplicates(letters);
+        letters = (ArrayList<String>) ListTools.removeDuplicates(letters);
         Collections.sort(letters);
+        return letters;
+    }
 
+    private ArrayList<Model> generateModels(ArrayList<String> letters) {
+        ArrayList<Model> modelList;
         ArrayList<String> domain = new ArrayList<>();
         domain.addAll(letters);
         domain.add(0, "#");
-        models = new ArrayList<>();
+        modelList = new ArrayList<>();
         int cnt = 0;
         while (cnt < this.order) {
-            int i1 = cnt++;
+            int position = cnt++;
             Stack<String> dataCopy = (Stack<String>) data.clone();
-            Model model = new Model(dataCopy , (this.order - i1), this.prior, domain);
+            Model model = new Model(dataCopy , (this.order - position), this.prior, domain);
             model.createModel();
-            models.add(model);
+            modelList.add(model);
         }
+        return modelList;
     }
 
     public String generate() {

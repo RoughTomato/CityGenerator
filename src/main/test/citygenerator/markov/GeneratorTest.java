@@ -1,7 +1,7 @@
 package citygenerator.markov;
 
+import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.Stack;
@@ -13,6 +13,10 @@ public class GeneratorTest extends Generator {
     private Stack<String> data;
 
     Generator generator;
+
+    public GeneratorTest() {
+        super(0, 0, new Stack<>());
+    }
 
     @Before
     public void setUp() throws Exception {
@@ -33,16 +37,10 @@ public class GeneratorTest extends Generator {
     }
 
     @Test
-    public void generateTest() {
-        generator.createGenerator();
-        generator.generate();
-    }
-
-    @Test
     public void getLetterTest() {
         String context = "####TEST";
         generator.createGenerator();
         generator.generate();
-        generator.getLetter(context);
+        Assert.assertEquals((Character)'A', generator.getLetter(context));
     }
 }

@@ -86,7 +86,7 @@ public class Model {
         }
     }
 
-    protected void buildChains() {
+    private void buildChains() {
         chains = new HashMap<>();
         ArrayList<Float> value;
         for (Map.Entry<String, ArrayList<String>> item : observations.entrySet()) {
@@ -135,9 +135,9 @@ public class Model {
         return 0;
     }
 
-    protected Stack<String> convertStringArrayToStack(String[] string) {
+    public static Stack<String> convertStringArrayToStack(String[] string) {
         Stack<String> stack = new Stack<>();
-        for (int length = string.length; length != 0; length--) {
+        for (int length = (string.length-1); length != 0; length--) {
             stack.push(string[length]);
         }
         return stack;

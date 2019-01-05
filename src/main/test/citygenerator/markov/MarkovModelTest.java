@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Stack;
 
 public class MarkovModelTest extends Model {
@@ -47,7 +48,6 @@ public class MarkovModelTest extends Model {
         String context = "####TEST";
 
         model.createModel();
-        model.buildChains();
         Assert.assertEquals("A", model.generate(context));
     }
 
@@ -65,44 +65,23 @@ public class MarkovModelTest extends Model {
     }
 
     @Test
-    public void buildChains() {
-        this.data.push("TEST");
-        this.data.push("DATA");
-        this.data.push("TESTING");
-        this.data.push("WORDS");
-        model.train();
-        model.buildChains();
-    }
-
-    @Test
     public void countMatches() {
-        ArrayList<String> arr = new ArrayList<>();
-        arr.add("a");
-        arr.add("a");
-        arr.add("a");
-        arr.add("a");
-        arr.add("a");
-        arr.add("o");
-        String v = "lorem ipsum";
-        Assert.assertEquals(1, super.countMatches(arr, v));
+        String[] arr = { "a", "a", "a", "a", "a", "o" };
+        String v = "lorem ipsum o";
+        ArrayList<String> list = new ArrayList<>();
+        list.addAll(Arrays.asList(arr));
+        Assert.assertEquals(1, super.countMatches(list, v));
     }
 
     @Test
     public void countDoubleOMatches() {
-        ArrayList<String> arr = new ArrayList<>();
-        arr.add("a");
-        arr.add("a");
-        arr.add("o");
-        arr.add("a");
-        arr.add("a");
-        arr.add("o");
+        String[] arr = { "a", "a", "o", "a", "a", "o" };
         String v = "lorem ipsum o";
-        Assert.assertEquals(2, super.countMatches(arr, v));
+        ArrayList<String> list = new ArrayList<>();
+        list.addAll(Arrays.asList(arr));
+        Assert.assertEquals(2, super.countMatches(list, v));
     }
 
-    /* I am not 100% sure about whether this method works correctly yet.
-    *  This test only proves that it works as intended for this particular case
-    *  I'll come back to it while I understand a bit more.*/
     @Test
     public void selectIndex() {
         ArrayList<Float> chain = new ArrayList<>();
@@ -114,7 +93,20 @@ public class MarkovModelTest extends Model {
     }
 
     @Test
-    public void convertStringArrayToStack() {
+    public void convertStringArrayToStackNullTest() {
+        String[] arr = { "a", "a", "o", "a", "a", "o" };
+        Stack<String> stack = Model.convertStringArrayToStack(arr);
+        Assert.assertNotNull(stack);
+    }
 
+    @Test
+    public void convertStringArrayToStackContentTest() {
+        String[] arr = { "a", "a", "o", "a", "a", "o" };
+        Stack<String> stack = Model.convertStringArrayToStack(arr);
+        for(int i = 0; i < arr.length-1; i++) {
+            if(stack.get(i) == null) {
+                Assert.fail("Stack have less elements than array.");
+            }
+        }
     }
 }
