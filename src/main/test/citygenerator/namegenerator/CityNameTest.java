@@ -1,4 +1,4 @@
-package citygenerator.model.DataLayer.namegenerator;
+package citygenerator.model.DataLayer.BussinesLogic.namegenerator;
 
 import org.junit.Assert;
 import org.junit.Test;

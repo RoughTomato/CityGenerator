@@ -1,4 +1,4 @@
-package citygenerator.markov;
+package citygenerator.model.DataLayer.BussinesLogic.markov;
 
 import java.util.ArrayList;
 import java.util.Stack;
