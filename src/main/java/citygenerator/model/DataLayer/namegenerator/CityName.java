@@ -1,4 +1,4 @@
-package citygenerator.namegenerator;
+package citygenerator.model.DataLayer.namegenerator;
 
 public class CityName implements NameGenerator {
 
