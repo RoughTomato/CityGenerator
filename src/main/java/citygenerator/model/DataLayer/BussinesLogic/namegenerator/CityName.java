@@ -1,22 +1,23 @@
 package citygenerator.model.DataLayer.BussinesLogic.namegenerator;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class CityName implements NameGenerator {
 
-    private Long seed = 0L;
+    private AtomicLong seed;
 
-    public CityName(Long seed) {
+    public CityName(AtomicLong seed) {
         this.seed = seed;
     }
 
     @Override
-    public void setSeed(Long seed) {
+    public void setSeed(AtomicLong seed) {
         this.seed = seed;
     }
 
     @Override
-    public Long getSeed() {
+    public AtomicLong getSeed() {
         return seed;
     }
 

@@ -15,7 +15,7 @@ public class CityNamesController {
     @Autowired
     private CityNamesRepo namesRepository;
 
-    @GetMapping
+    @GetMapping(path="/addnew")
     public @ResponseBody String addNewName(@RequestParam String name) {
         CityNames cityname = new CityNames(name);
         namesRepository.save(cityname);
