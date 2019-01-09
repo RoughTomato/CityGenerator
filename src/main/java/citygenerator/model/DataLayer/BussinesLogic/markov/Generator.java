@@ -1,4 +1,4 @@
-package citygenerator.markov;
+package citygenerator.model.DataLayer.BussinesLogic.markov;
 
 import citygenerator.util.ListTools;
 
