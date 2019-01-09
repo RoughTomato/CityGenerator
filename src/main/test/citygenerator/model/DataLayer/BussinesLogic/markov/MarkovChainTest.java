@@ -1,4 +1,4 @@
-package citygenerator.markov;
+package citygenerator.model.DataLayer.BussinesLogic.markov;
 
 import org.junit.Assert;
 import org.junit.Before;

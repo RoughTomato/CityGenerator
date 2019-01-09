@@ -1,6 +1,6 @@
 package citygenerator.util;
 
-import citygenerator.markov.MarkovChain;
+import citygenerator.model.DataLayer.BussinesLogic.markov.MarkovChain;
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package citygenerator;
+package citygenerator.model.DataLayer.POJO;
 
 public class Message {
     private final long id;
