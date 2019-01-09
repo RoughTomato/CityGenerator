@@ -26,5 +26,7 @@ public class CityName implements NameGenerator {
     }
 
     @Override
-    public List<String> getNames() { return null; }
+    public List<String> getNames(Integer count) {
+        return null;
+    }
 }

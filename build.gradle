@@ -28,6 +28,16 @@ sourceSets.main {
     }
 }
 
+sourceSets.test {
+    java {
+        srcDir 'src/main/test'
+    }
+    resources {
+        srcDirs = ['src/main/test', 'src/main/test/resources']
+        exclude "**/*.java"
+    }
+}
+
 repositories {
     mavenCentral()
 }
