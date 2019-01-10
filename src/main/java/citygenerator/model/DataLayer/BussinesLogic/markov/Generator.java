@@ -5,23 +5,24 @@ import citygenerator.util.ListTools;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Stack;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class Generator {
 
     private int order;
-    private float prior;
+    private double prior;
     private Stack<String> data;
     /* TODO
         make class models that handles model list related behaviors
      */
     private ArrayList<Model> models;
+    private AtomicLong seed;
 
-    protected Generator() { }
-
-    public Generator(int order, float prior, Stack<String> data) {
+    public Generator(int order, double prior, Stack<String> data, AtomicLong seed) {
         this.order = order;
         this.prior = prior;
         this.data = data;
+        this.seed = seed;
     }
 
     public void createGenerator() {
@@ -55,7 +56,7 @@ public class Generator {
         while (cnt < this.order) {
             int position = cnt++;
             Stack<String> dataCopy = (Stack<String>) data.clone();
-            Model model = new Model(dataCopy , (this.order - position), this.prior, domain);
+            Model model = new Model(dataCopy , (this.order - position), this.prior, domain, seed);
             model.createModel();
             modelList.add(model);
         }
