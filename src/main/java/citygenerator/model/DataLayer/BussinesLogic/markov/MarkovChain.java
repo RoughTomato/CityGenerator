@@ -9,8 +9,9 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class MarkovChain {
 
-    private int order = 8;
-    private double prior = 0.3f;
+    private AtomicLong seed;
+    private int order;
+    private double prior;
     private Stack<String> data;
 
     private Generator generator;
@@ -19,7 +20,8 @@ public class MarkovChain {
         this.data = data;
         this.order = order;
         this.prior = prior;
-        generator = new Generator(order, prior, data, seed);
+        this.seed = seed;
+        generator = new Generator(this.order, this.prior, this.data, this.seed);
         generator.createGenerator();
     }
 
@@ -28,7 +30,8 @@ public class MarkovChain {
         this.data.addAll(data);
         this.order = order;
         this.prior = prior;
-        generator = new Generator(this.order, this.prior, this.data, seed);
+        this.seed = seed;
+        generator = new Generator(this.order, this.prior, this.data, this.seed);
         generator.createGenerator();
     }
 

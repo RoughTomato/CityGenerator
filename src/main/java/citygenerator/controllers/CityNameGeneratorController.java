@@ -23,30 +23,52 @@ public class CityNameGeneratorController {
     
     private AtomicLong seed = new AtomicLong(0);
     private AtomicDouble prior = new AtomicDouble(0);
-    private AtomicInteger order = new AtomicInteger(8);
+    private AtomicInteger order = new AtomicInteger(10);
     private NameGenerator generator;
     Stack<String> data = new Stack<>();
 
-    @GetMapping(path="/getname")
-    public @ResponseBody String getGeneratedName() {
-        if(data.size() == 0) {
-            ArrayList<CityNames> result = Lists.newArrayList(namesRepository.findAll());
-            for(CityNames city : result) {
-                data.add(city.getName());
-            }
-        }
-        if(data.size() > 0) {
-            generator = new CityName(data, this.order.get(), this.prior.get(), this.seed);
-            return generator.getName();
-        } else {
-            return "ERROR. Couldn't fetch recrods.";
+    private void fillDataStack() {
+        ArrayList<CityNames> result = Lists.newArrayList(namesRepository.findAll());
+        for(CityNames city : result) {
+            data.add(city.getName());
         }
     }
 
-    @GetMapping(path="/setseed")
-    public @ResponseBody String setSeed(@RequestParam Long seed) {
-        this.seed = new AtomicLong(seed);
-        return "Random seed was changed to: " + this.seed.toString();
+    private void getGeneratorInstance(){
+        if(this.generator == null) {
+            fillDataStack();
+            generator = new CityName(this.data, this.order.get(), this.prior.get(), this.seed);
+        }
+    }
+
+    @GetMapping(path="/getname")
+    public @ResponseBody String getGeneratedName
+            (@RequestParam(required=false, defaultValue="20") Integer order,
+             @RequestParam(required=false, defaultValue="0.0") Double prior,
+             @RequestParam(required=false, defaultValue="6692049294298592859")
+                     Long seed) {
+        String name;
+        this.seed.set(seed);
+        this.order.set(order);
+        this.prior.set(prior);
+
+        if(this.data.size() == 0) {
+            this.getGeneratorInstance();
+            name = this.generator.getName();
+        }
+        else if(data.size() != 0) {
+            name = this.generator.getName();
+        }
+        else {
+            name = "Error. Couldn't fetch name.";
+        }
+        return name;
+    }
+
+    @GetMapping(path="/cleardata")
+    public @ResponseBody String clearData() {
+        this.data.clear();
+        return "Done.";
     }
 
     @GetMapping(path="/getnames")

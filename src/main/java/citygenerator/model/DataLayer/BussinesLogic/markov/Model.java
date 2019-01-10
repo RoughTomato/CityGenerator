@@ -15,7 +15,7 @@ public class Model {
     private Map<String, ArrayList<Double>> chains;
 
     private AtomicLong seed;
-    private Random rand = new Random(0);
+    private Random rand;
 
     protected Model(){ }
 
@@ -25,6 +25,7 @@ public class Model {
         this.alphabet = alphabet;
         this.data = data;
         this.seed = seed;
+        this.rand = new Random(seed.get());
         observations = new HashMap<>();
         chains = new HashMap<>();
     }
@@ -34,6 +35,7 @@ public class Model {
         this.prior = prior;
         this.alphabet = alphabet;
         this.data = convertStringArrayToStack(data);
+        this.rand = new Random(seed.get());
         observations = new HashMap<>();
         chains = new HashMap<>();
     }
@@ -118,8 +120,8 @@ public class Model {
     }
 
     protected int selectIndex(ArrayList<Double> chain) {
-        float accumulator = 0.0f;
-        ArrayList<Float> totals = new ArrayList<>();
+        double accumulator = 0.0;
+        ArrayList<Double> totals = new ArrayList<>();
 
         for (double weight : chain) {
             accumulator += weight;
@@ -127,8 +129,8 @@ public class Model {
         }
 
         for (int i = 0; i < totals.size(); i++) {
-            float rand = this.rand.nextFloat() * accumulator;
-            float currentTotal = totals.get(i);
+            double rand = this.rand.nextDouble() * accumulator;
+            double currentTotal = totals.get(i);
             if (rand < currentTotal) {
                 return i;
             }
