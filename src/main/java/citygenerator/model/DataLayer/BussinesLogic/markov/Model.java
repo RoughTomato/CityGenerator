@@ -3,35 +3,39 @@ package citygenerator.model.DataLayer.BussinesLogic.markov;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class Model {
 
     private int order;
-    private float prior;
+    private double prior;
     private ArrayList<String> alphabet;
     private Stack<String> data;
     private Map<String, ArrayList<String>> observations;
-    private Map<String, ArrayList<Float>> chains;
+    private Map<String, ArrayList<Double>> chains;
 
-    private long seed = 0;
-    private Random rand = new Random(seed);
+    private AtomicLong seed;
+    private Random rand;
 
     protected Model(){ }
 
-    public Model(Stack<String> data, int order, float prior, ArrayList<String> alphabet) {
+    public Model(Stack<String> data, int order, double prior, ArrayList<String> alphabet, AtomicLong seed) {
         this.order = order;
         this.prior = prior;
         this.alphabet = alphabet;
         this.data = data;
+        this.seed = seed;
+        this.rand = new Random(seed.get());
         observations = new HashMap<>();
         chains = new HashMap<>();
     }
 
-    public Model(String[] data, int order, float prior, ArrayList<String> alphabet) {
+    public Model(String[] data, int order, double prior, ArrayList<String> alphabet) {
         this.order = order;
         this.prior = prior;
         this.alphabet = alphabet;
         this.data = convertStringArrayToStack(data);
+        this.rand = new Random(seed.get());
         observations = new HashMap<>();
         chains = new HashMap<>();
     }
@@ -43,7 +47,7 @@ public class Model {
     }
 
     public String generate(String context) {
-        ArrayList<Float> chain;
+        ArrayList<Double> chain;
         chain = this.chains.get(context);
 
         if (chain == null) {
@@ -88,7 +92,7 @@ public class Model {
 
     private void buildChains() {
         chains = new HashMap<>();
-        ArrayList<Float> value;
+        ArrayList<Double> value;
         for (Map.Entry<String, ArrayList<String>> item : observations.entrySet()) {
             for (String prediction : alphabet) {
                 String context = item.getKey();
@@ -115,18 +119,18 @@ public class Model {
         return occurrences;
     }
 
-    protected int selectIndex(ArrayList<Float> chain) {
-        float accumulator = 0.0f;
-        ArrayList<Float> totals = new ArrayList<>();
+    protected int selectIndex(ArrayList<Double> chain) {
+        double accumulator = 0.0;
+        ArrayList<Double> totals = new ArrayList<>();
 
-        for (float weight : chain) {
+        for (double weight : chain) {
             accumulator += weight;
             totals.add(accumulator);
         }
 
         for (int i = 0; i < totals.size(); i++) {
-            float rand = this.rand.nextFloat() * accumulator;
-            float currentTotal = totals.get(i);
+            double rand = this.rand.nextDouble() * accumulator;
+            double currentTotal = totals.get(i);
             if (rand < currentTotal) {
                 return i;
             }
@@ -144,6 +148,6 @@ public class Model {
     }
 
     public void setSeed(long seed) {
-        this.seed = seed;
+        this.seed.set(seed);
     }
 }

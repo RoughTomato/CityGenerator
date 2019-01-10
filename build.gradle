@@ -15,7 +15,7 @@ apply plugin: 'io.spring.dependency-management'
 
 bootJar {
     baseName = 'generator-service'
-    version =  '0.1.0'
+    version =  '0.2.1'
 }
 
 sourceSets.main {
@@ -26,6 +26,10 @@ sourceSets.main {
         srcDirs = ['src/main/java', 'src/main/resources']
         exclude "**/*.java"
     }
+}
+
+tasks.withType(JavaExec) {
+    jvmArgs = ['-Xms512m', '-Xmx1024m']
 }
 
 sourceSets.test {
@@ -48,11 +52,12 @@ targetCompatibility = 1.8
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
-    compile('mysql:mysql-connector-java')
+    compile("com.google.guava:guava:27.0.1-jre")
+    compile("mysql:mysql-connector-java")
     compile("com.h2database:h2")
-    compile('org.apache.commons:commons-lang3:3.8')
-    testCompile('org.springframework.boot:spring-boot-starter-test')
-    testCompile('junit:junit:4.12')
+    compile("org.apache.commons:commons-lang3:3.8")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile("junit:junit:4.12")
     testCompile("com.h2database:h2")
 
 }
