@@ -1,10 +1,11 @@
 language: java
 install: true
 
+install:
+        - gradle wrapper --gradle-version 4.2
+        - ./gradlew assemble
 jdk:
         - oraclejdk8
-install:
-        - ./gradlew assemble
 script:
         - ./gradlew test
         - ./gradlew bootJar
