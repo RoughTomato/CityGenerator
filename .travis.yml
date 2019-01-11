@@ -8,6 +8,7 @@ jdk:
         - oraclejdk8
 script:
         - ./gradlew test
+        - ./gradlew jacocoTestReport
         - ./gradlew bootJar
 before_cache:
           - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
