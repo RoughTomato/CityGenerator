@@ -9,6 +9,7 @@ jdk:
 script:
         - ./gradlew test
         - ./gradlew jacocoTestReport
+        - mkdir -p build/reports/jacoco/
         - bash <(curl -s https://codecov.io/bash)
         - ./gradlew bootJar
 before_cache:
