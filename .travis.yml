@@ -4,8 +4,8 @@ install: true
 jdk:
         - oraclejdk8
 script:
-        - ./gradle test
-        - ./gradle bootJar
+        - ./gradlew test
+        - ./gradlew bootJar
 before_cache:
           - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
           - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
