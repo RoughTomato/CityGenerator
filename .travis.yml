@@ -3,6 +3,8 @@ install: true
 
 jdk:
         - oraclejdk8
+install:
+        - ./gradlew assemble
 script:
         - ./gradlew test
         - ./gradlew bootJar
