@@ -46,7 +46,7 @@ sourceSets.test {
 jacocoTestReport {
     reports {
         xml.enabled true
-	xml.destination file {"${buildDir}/jacoco"}
+	xml.destination file {"${buildDir}/jacoco/"}
         html.enabled false
         csv.enabled false
     }
