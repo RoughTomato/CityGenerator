@@ -6,28 +6,37 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class MaleNames implements NamesGenerator {
+public class Names {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+    private NameTypes type;
 
-    public MaleNames(String name) {
+    public Names(String name, NameTypes type) {
+        this.name = name;
+        this.type = type;
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public NameTypes getType() {
+        return this.type;
+    }
+
+    public void setType(NameTypes type) {
+        this.type = type;
+    }
+
+    public void setName(String name) {
         this.name = name;
     }
-
-    @Override
-    public Long getId() {
-        return null;
-    }
-
-    @Override
-    public String getName() {
-        return null;
-    }
-
-    @Override
-    public void setName(String name) {
-
-    }
 }
+

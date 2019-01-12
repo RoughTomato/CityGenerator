@@ -2,8 +2,9 @@ package citygenerator.controllers;
 
 import citygenerator.model.DataLayer.BussinesLogic.namegenerator.CityName;
 import citygenerator.model.DataLayer.BussinesLogic.namegenerator.NameGenerator;
-import citygenerator.model.DataLayer.Entities.CityNames;
-import citygenerator.model.DataLayer.Repositories.CityNamesRepo;
+import citygenerator.model.DataLayer.Entities.NameTypes;
+import citygenerator.model.DataLayer.Entities.Names;
+import citygenerator.model.DataLayer.Repositories.NamesRepo;
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.AtomicDouble;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,8 @@ import java.util.concurrent.atomic.AtomicLong;
 public class CityNameGeneratorController {
 
     @Autowired
-    private CityNamesRepo namesRepository;
-    
+    private NamesRepo namesRepository;
+
     private AtomicLong seed = new AtomicLong(0);
     private AtomicDouble prior = new AtomicDouble(0);
     private AtomicInteger order = new AtomicInteger(10);
@@ -28,9 +29,11 @@ public class CityNameGeneratorController {
     Stack<String> data = new Stack<>();
 
     private void fillDataStack() {
-        ArrayList<CityNames> result = Lists.newArrayList(namesRepository.findAll());
-        for(CityNames city : result) {
-            data.add(city.getName());
+        ArrayList<Names> result = Lists.newArrayList(namesRepository.findAll());
+        for(Names city : result) {
+            if(city.getType().equals(NameTypes.CITY)) {
+                data.add(city.getName());
+            }
         }
     }
 
