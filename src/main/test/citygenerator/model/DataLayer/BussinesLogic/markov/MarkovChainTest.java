@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.Stack;
+import java.util.concurrent.atomic.AtomicLong;
 
 import static org.junit.Assert.*;
 
@@ -52,14 +53,14 @@ public class MarkovChainTest {
     public void setUp() {
         this.data = new Stack<>();
         this.data.addAll(Arrays.asList(wordlist));
-        textGenerator = new MarkovChain(data, 8, 0.0f);
+        textGenerator = new MarkovChain(data, 8, 0.0, new AtomicLong(652352666));
     }
 
     @Test
     public void generateTest() {
         String s = textGenerator.generateName();
-        Assert.assertEquals("ellsberg", s);
+        Assert.assertEquals("doberlug", s);
         s = textGenerator.generateName();
-        Assert.assertEquals("heimbach", s);
+        Assert.assertEquals("dpbach", s);
     }
 }
