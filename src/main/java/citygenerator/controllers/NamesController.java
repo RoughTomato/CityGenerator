@@ -10,23 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Arrays;
+
 @Controller
 @RequestMapping(path="/names")
 public class NamesController {
     @Autowired
     private NamesRepo namesRepository;
-
-    @GetMapping(path="/addall")
-    public @ResponseBody String addAll() {
-        String arr[] =
-                {
-                        
-                };
-        for(String name : arr) {
-
-        }
-        return "Done.";
-    }
 
     @GetMapping(path="/addnew")
     public @ResponseBody String addNewName(@RequestParam String name,

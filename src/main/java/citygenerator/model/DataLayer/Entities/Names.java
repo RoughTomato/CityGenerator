@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/* TODO: Add premade training data in sql format for quick filling of the database */
+
 @Entity
 public class Names {
 
@@ -13,6 +15,8 @@ public class Names {
     private Long id;
     private String name;
     private NameTypes type;
+
+    protected Names() { }
 
     public Names(String name, NameTypes type) {
         this.name = name;
