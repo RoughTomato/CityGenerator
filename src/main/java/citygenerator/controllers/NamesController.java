@@ -18,6 +18,12 @@ public class NamesController {
     @Autowired
     private NamesRepo namesRepository;
 
+    @GetMapping(path="/removeall")
+    public @ResponseBody String removeAll() {
+        namesRepository.deleteAll();
+        return "Done.";
+    }
+
     @GetMapping(path="/addnew")
     public @ResponseBody String addNewName(@RequestParam String name,
                                            @RequestParam NameTypes type) {

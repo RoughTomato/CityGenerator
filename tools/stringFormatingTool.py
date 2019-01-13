@@ -23,6 +23,10 @@ def selectType(outType):
     }
     return typeDic[outType]()
 
+def fileLines(filename):
+    with open(filename) as f:
+           return len(list(f))
+
 parser = ArgumentParser()
 parser.add_argument("-f", "--file", dest="file",
         help="file containing text to be converted", metavar="FILE")
@@ -47,14 +51,19 @@ if not args.spliter is None:
     spliter = args.spliter
 
 if os.path.isfile(filename):
-    file = open(filename,"r")
-    holder = file.read()
-    array = holder.split(spliter)
 
     finalString = ""
-    for i in range(len(array)-2):
-        finalString += outTypeOpening + array[i] + outTypeCloseing + ","
-    finalString += outTypeOpening + array[len(array)-1] + outTypeCloseing + ","
+    if(spliter == 'newline'):
+        with open(filename) as fp:
+            for i in range(fileLines(filename)-1):
+                finalString += outTypeOpening + fp.readline().strip().lower() + outTypeCloseing + ","
+    else:
+        file = open(filename,"r")
+        holder = file.read()
+        array = holder.split(spliter)
+        for i in range(len(array)-2):
+            finalString += outTypeOpening + array[i].lower() + outTypeCloseing + ","
+        finalString += outTypeOpening + array[len(array)-1].lower() + outTypeCloseing + ","
 
     file = open(outputname, "w")
     file.write(finalString)
