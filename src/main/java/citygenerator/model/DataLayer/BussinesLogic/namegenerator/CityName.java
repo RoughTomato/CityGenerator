@@ -1,8 +1,6 @@
 package citygenerator.model.DataLayer.BussinesLogic.namegenerator;
 
 import citygenerator.model.DataLayer.BussinesLogic.markov.MarkovChain;
-import citygenerator.model.DataLayer.Repositories.CityNamesRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Stack;

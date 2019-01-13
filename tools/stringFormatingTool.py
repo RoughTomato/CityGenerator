@@ -1,3 +1,4 @@
+#!/usr/bin/python
 from argparse import ArgumentParser
 import os
 
@@ -8,8 +9,6 @@ outputType="array"
 spliter= ' '
 outTypeOpening="\""
 outTypeCloseing="\""
-
-types = "array\nsql"
 
 def selectType(outType):
     def array():
@@ -30,7 +29,7 @@ parser.add_argument("-f", "--file", dest="file",
 parser.add_argument("-o", "--out", dest="output",
         help="output file", metavar="OUTPUT")
 parser.add_argument("-t", "--type", dest="type",
-        help="type of output, acceptable types are:\n" + types,
+        help="type of output, acceptable types are:\narray\nsql",
         metavar="TYPE")
 parser.add_argument("-s", "--spliter", dest="spliter",
         help="character betwin two strings e.g. \"|\" default space.",
