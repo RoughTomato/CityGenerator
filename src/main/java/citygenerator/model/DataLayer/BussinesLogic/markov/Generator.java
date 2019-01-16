@@ -87,7 +87,7 @@ public class Generator {
     public Character getLetter(String context) {
         String letter = null;
         context = context.substring(context.length() - order, context.length());
-        for (Model model : models) {
+        for (Model model : this.models) {
             letter = model.generate(context);
             if (letter == null){
                 context = context.substring(1);
