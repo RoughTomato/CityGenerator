@@ -4,6 +4,7 @@ import citygenerator.util.ListTools;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Stack;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -37,11 +38,13 @@ public class Generator {
         {
             String word = data.get(dataCount);
             ++dataCount;
-            for (Character c : word.toCharArray()){
-                letters.add(c.toString());
+            for (char c : word.toCharArray()){
+                letters.add(Character.toString(c));
             }
         }
-        letters = (ArrayList<String>) ListTools.removeDuplicates(letters);
+        List<String> tmpList = ListTools.removeDuplicates(letters);
+        letters.clear();
+        letters.addAll(tmpList);
         Collections.sort(letters);
         return letters;
     }
@@ -93,6 +96,11 @@ public class Generator {
                 break;
             }
         }
-        return letter.charAt(0);
+        if(letter == null) {
+            throw new NullPointerException("[Generator:Letter:getLetter] letter is null.");
+        }
+        else {
+            return letter.charAt(0);
+        }
     }
 }
