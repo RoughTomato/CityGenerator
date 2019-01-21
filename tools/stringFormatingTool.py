@@ -12,11 +12,11 @@ outTypeCloseing="\""
 
 def selectType(outType):
     def array():
-        outTypeOpening="\""
-        outTypeCloseing="\""
+        outTypeOpening="\"" #lgtm [py/unused-local-variable]
+        outTypeCloseing="\"" #lgtm [py/unused-local-variable]
     def sql():
-        outTypeOpening="(\'"
-        outTypeClosing="\')"
+        outTypeOpening="(\'" #lgtm [py/unused-local-variable]
+        outTypeClosing="\')" #lgtm [py/unused-local-variable]
     typeDic = {
         "array" : array,
         "sql" : sql,
