@@ -2,8 +2,9 @@ package citygenerator.controllers;
 
 import citygenerator.model.DataLayer.BussinesLogic.namegenerator.CityName;
 import citygenerator.model.DataLayer.BussinesLogic.namegenerator.NameGenerator;
-import citygenerator.model.DataLayer.Entities.CityNames;
-import citygenerator.model.DataLayer.Repositories.CityNamesRepo;
+import citygenerator.model.DataLayer.Entities.NameTypes;
+import citygenerator.model.DataLayer.Entities.Names;
+import citygenerator.model.DataLayer.Repositories.NamesRepo;
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.AtomicDouble;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,18 +20,20 @@ import java.util.concurrent.atomic.AtomicLong;
 public class CityNameGeneratorController {
 
     @Autowired
-    private CityNamesRepo namesRepository;
-    
+    private NamesRepo namesRepository;
+
     private AtomicLong seed = new AtomicLong(0);
     private AtomicDouble prior = new AtomicDouble(0);
-    private AtomicInteger order = new AtomicInteger(10);
+    private AtomicInteger order = new AtomicInteger(5);
     private NameGenerator generator;
     Stack<String> data = new Stack<>();
 
     private void fillDataStack() {
-        ArrayList<CityNames> result = Lists.newArrayList(namesRepository.findAll());
-        for(CityNames city : result) {
-            data.add(city.getName());
+        ArrayList<Names> result = Lists.newArrayList(namesRepository.findAll());
+        for(Names city : result) {
+            if(city.getType().equals(NameTypes.CITY)) {
+                data.add(city.getName());
+            }
         }
     }
 
@@ -43,24 +46,23 @@ public class CityNameGeneratorController {
 
     @GetMapping(path="/getname")
     public @ResponseBody String getGeneratedName
-            (@RequestParam(required=false, defaultValue="20") Integer order,
+            (@RequestParam(required=false, defaultValue="5") Integer order,
              @RequestParam(required=false, defaultValue="0.0") Double prior,
              @RequestParam(required=false, defaultValue="6692049294298592859")
                      Long seed) {
-        String name;
+        String name = "Error";
         this.seed.set(seed);
         this.order.set(order);
         this.prior.set(prior);
 
         if(this.data.size() == 0) {
             this.getGeneratorInstance();
-            name = this.generator.getName();
         }
-        else if(data.size() != 0) {
+        for(int i = 0; i <= 1000; i++) {
             name = this.generator.getName();
-        }
-        else {
-            name = "Error. Couldn't fetch name.";
+            if(name.length() > 5 && name.length() < 11) {
+                break;
+            }
         }
         return name;
     }

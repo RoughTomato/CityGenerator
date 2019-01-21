@@ -8,60 +8,39 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Stack;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class MarkovModelTest extends Model {
 
     Model model;
 
     private int order;
-    private float prior;
+    private double prior;
+    private AtomicLong seed;
     private ArrayList<String> alphabet;
     private Stack<String> data;
 
     @Before
     public void setUp() throws Exception {
-        order = 8;
-        prior = 0;
-        alphabet = new ArrayList<>();
-        data = new Stack<>();
-        model = new Model(data, order, prior, alphabet);
-    }
-
-    @Test
-    public void createModel() {
-        super.createModel();
+        this.order = 8;
+        this.prior = 0;
+        this.alphabet = new ArrayList<>();
+        this.data = new Stack<>();
+        this.seed = new AtomicLong(0);
+        model = new Model(data, order, prior, alphabet, seed);
     }
 
     @Test
     public void generate() {
-        this.data.push("TEST");
-        this.data.push("DATA");
-        this.data.push("TESTING");
-        this.data.push("WORDS");
-        this.prior = 0.3f;
-        this.alphabet.add("A");
-        this.alphabet.add("B");
-        this.alphabet.add("D");
-        this.alphabet.add("T");
-        this.alphabet.add("S");
-        this.alphabet.add("R");
+        String[] arr = {"TEST","DATA","TESTING","WORDS" };
+        String[] letters = {"A",  "B",  "D",  "T",  "S",  "R"};
+        this.prior = 0.3;
+        this.data.addAll(Arrays.asList(arr));
+        this.alphabet.addAll(Arrays.asList(letters));
         String context = "####TEST";
 
         model.createModel();
         Assert.assertEquals("A", model.generate(context));
-    }
-
-    @Test
-    public void retrain() {
-    }
-
-    @Test
-    public void train() {
-        this.data.push("TEST");
-        this.data.push("DATA");
-        this.data.push("TESTING");
-        this.data.push("WORDS");
-        model.train();
     }
 
     @Test
@@ -84,12 +63,12 @@ public class MarkovModelTest extends Model {
 
     @Test
     public void selectIndex() {
-        ArrayList<Float> chain = new ArrayList<>();
-        chain.add(0.2f);
-        chain.add(0.8f);
-        chain.add(0.1f);
-        super.setSeed(12345);
-        Assert.assertEquals(1, super.selectIndex(chain));
+        ArrayList<Double> chain = new ArrayList<>();
+        chain.add(0.2);
+        chain.add(0.8);
+        chain.add(0.1);
+        model.setSeed(12345);
+        Assert.assertEquals(1, model.selectIndex(chain));
     }
 
     @Test
