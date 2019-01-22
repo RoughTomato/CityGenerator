@@ -1,13 +1,22 @@
 package citygenerator.model.DataLayer.BussinesLogic.voronoi;
 
 import de.alsclo.voronoi.Voronoi;
+import de.alsclo.voronoi.graph.Edge;
 import de.alsclo.voronoi.graph.Graph;
 import de.alsclo.voronoi.graph.Point;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.stream.Stream;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.array;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.core.IsNull.notNullValue;
 
 public class VoronoiDiagramTest {
 
@@ -26,18 +35,44 @@ public class VoronoiDiagramTest {
         veronoi = new VoronoiDiagram(points);
     }
 
+    @Rule
+    public ExpectedException expectedNull = ExpectedException.none();
+
     @Test
-    public void create() {
-        Voronoi voronoi = veronoi.create();
-        Graph graph = voronoi.getGraph();
-        Set<Point> set = graph.getSitePoints();
-        for(Point point : set) {
-           // System.out.println(point.x + ":" + point.y);
-        }
-        voronoi.getGraph().edgeStream().filter(e -> e.getA() != null && e.getB() != null).forEach(e -> {
+    public void generateEdgeStream() {
+        Stream<Edge> actual = veronoi.generateEdgeStream();
+        assertThat(actual, notNullValue());
+    }
+
+    @Test
+    public void testEdgePair() {
+        Point[] p = new Point[2];
+        Point[] expected = new Point[2];
+        expected[0] = new Point(92.19, 50.24);
+        expected[1] = new Point(59.84, -54.89);
+
+        veronoi.generateEdgeStream().filter(
+                e -> e.getA() != null && e.getB() != null).forEach(e -> {
+            p[0] = e.getA().getLocation();
+            p[1] = e.getB().getLocation();
+        });
+        //assertThat(p, is(expected));
+    }
+
+    @Test
+    public void generateHexagon() {
+        veronoi.generateEdgeStream().filter(
+                e -> e.getA() != null && e.getB() != null).forEach(e -> {
             Point a = e.getA().getLocation();
             Point b = e.getB().getLocation();
-            System.out.println("Edge " + a + ":" + b);
+            System.out.println(a + "," + b);
         });
     }
+
+    @Test
+    public void generateWhenPointsAreNull() throws Exception{
+        expectedNull.expect(NullPointerException.class);
+        veronoi = new VoronoiDiagram(null);
+    }
+
 }
