@@ -50,24 +50,18 @@ public class VoronoiDiagramTest {
         Point[] expected = new Point[2];
         expected[0] = new Point(92.19, 50.24);
         expected[1] = new Point(59.84, -54.89);
-
+        boolean status = false;
         veronoi.generateEdgeStream().filter(
                 e -> e.getA() != null && e.getB() != null).forEach(e -> {
             p[0] = e.getA().getLocation();
             p[1] = e.getB().getLocation();
         });
-        //assertThat(p, is(expected));
+        if(p[0].equals(expected[0]) && p[1].equals(expected[1])) {
+            status = true;
+        }
+        assertThat(status, is(true));
     }
 
-    @Test
-    public void generateHexagon() {
-        veronoi.generateEdgeStream().filter(
-                e -> e.getA() != null && e.getB() != null).forEach(e -> {
-            Point a = e.getA().getLocation();
-            Point b = e.getB().getLocation();
-            System.out.println(a + "," + b);
-        });
-    }
 
     @Test
     public void generateWhenPointsAreNull() throws Exception{

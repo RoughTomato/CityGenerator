@@ -19,6 +19,16 @@ public class VoronoiDiagram {
         diagram = new Voronoi(points);
     }
 
+    public VoronoiDiagram relax() {
+        Voronoi v = diagram.relax();
+        this.setDiagram(v);
+        return this;
+    }
+
+    private void setDiagram(Voronoi diagram) {
+        this.diagram = diagram;
+    }
+
     public Stream<Edge> generateEdgeStream() {
         return diagram.getGraph().edgeStream();
     }

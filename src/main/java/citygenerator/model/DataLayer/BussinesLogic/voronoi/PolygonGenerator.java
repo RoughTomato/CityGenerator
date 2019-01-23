@@ -47,7 +47,7 @@ public class PolygonGenerator {
                     matchedEdges.add(e);
                 }
             }
-            polygons.add(new Polygon(site, matchedEdges));
+                polygons.add(new Polygon(site, matchedEdges));
         }
         return polygons;
     }

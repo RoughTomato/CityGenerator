@@ -20,6 +20,14 @@ public class Polygon implements Collection {
         this.points = points;
     }
 
+    public double getSiteX() {
+        return this.site.x;
+    }
+
+    public double getSiteY() {
+        return this.site.y;
+    }
+
     /**
      * Returns the number of elements in this collection.  If this collection
      * contains more than <tt>Integer.MAX_VALUE</tt> elements, returns
