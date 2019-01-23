@@ -1,7 +1,5 @@
 package citygenerator.model.DataLayer.BussinesLogic.markov;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -41,8 +39,12 @@ public class MarkovChain {
         return name;
     }
 
-    public List<String> generateNames() {
-        throw new NotImplementedException();
+    public List<String> generateNames(int count) {
+        List<String> nameList = new ArrayList<>();
+        for(int i = 0; i < count; i++){
+            nameList.add(this.generateName());
+        }
+        return nameList;
     }
 
 

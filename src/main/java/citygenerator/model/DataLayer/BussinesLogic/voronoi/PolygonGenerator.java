@@ -43,7 +43,7 @@ public class PolygonGenerator {
             Point site = sites.pop();
             ArrayList<Edge> matchedEdges = new ArrayList<>();
             for (Edge e : edges) {
-                if (e.getSite1().equals(site)){
+                if (e.getSite1().equals(site) || e.getSite2().equals(site)){
                     matchedEdges.add(e);
                 }
             }
