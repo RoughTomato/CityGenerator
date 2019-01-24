@@ -68,4 +68,4 @@ if os.path.isfile(filename):
     file = open(outputname, "w")
     file.write(finalString)
 else:
-    print filename + " doesn't exist or couldn't be accessed."
+    print(filename + " doesn't exist or couldn't be accessed.")

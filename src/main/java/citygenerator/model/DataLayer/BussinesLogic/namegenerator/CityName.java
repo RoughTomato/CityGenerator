@@ -39,6 +39,6 @@ public class CityName implements NameGenerator {
 
     @Override
     public List<String> getNames(Integer count) {
-        return markov.generateNames();
+        return markov.generateNames(count);
     }
 }

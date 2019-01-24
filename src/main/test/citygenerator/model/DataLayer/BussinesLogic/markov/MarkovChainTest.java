@@ -4,10 +4,12 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Stack;
 import java.util.concurrent.atomic.AtomicLong;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 public class MarkovChainTest {
@@ -57,10 +59,17 @@ public class MarkovChainTest {
     }
 
     @Test
-    public void generateTest() {
+    public void generateNameTest() {
         String s = textGenerator.generateName();
         Assert.assertEquals("doberlug", s);
         s = textGenerator.generateName();
         Assert.assertEquals("dpbach", s);
+    }
+
+    @Test
+    public void generateNamesTest() {
+        ArrayList<String> names = new ArrayList<>();
+        names.addAll(textGenerator.generateNames(30));
+        assertThat(names.size(), is(30));
     }
 }
