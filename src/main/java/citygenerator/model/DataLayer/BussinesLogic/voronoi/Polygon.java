@@ -12,12 +12,12 @@ import java.util.stream.Stream;
 
 public class Polygon implements Collection {
 
-    private Collection<Edge> points;
+    private Collection<Edge> edges;
     private Point site;
 
-    public Polygon(Point site, Collection<Edge> points) {
+    public Polygon(Point site, Collection<Edge> edges) {
         this.site = site;
-        this.points = points;
+        this.edges = edges;
     }
 
     public double getSiteX() {
@@ -37,7 +37,7 @@ public class Polygon implements Collection {
      */
     @Override
     public int size() {
-        return points.size();
+        return edges.size();
     }
 
     /**
@@ -47,7 +47,7 @@ public class Polygon implements Collection {
      */
     @Override
     public boolean isEmpty() {
-        return points.isEmpty();
+        return edges.isEmpty();
     }
 
     /**
@@ -68,13 +68,13 @@ public class Polygon implements Collection {
      */
     @Override
     public boolean contains(Object o) {
-        Point test = (Point) o;
+        Edge test = (Edge) o;
         boolean status = false;
         if(test.equals(this.site)) {
             status = true;
         }
         else {
-            for(Edge e : points) {
+            for(Edge e : edges) {
                 if(test.equals(e)){
                     status = true;
                 }
@@ -93,7 +93,7 @@ public class Polygon implements Collection {
      */
     @Override
     public Iterator iterator() {
-        return points.iterator();
+        return edges.iterator();
     }
 
     /**
@@ -115,7 +115,7 @@ public class Polygon implements Collection {
      */
     @Override
     public void forEach(Consumer action) {
-        points.forEach(action);
+        edges.forEach(action);
     }
 
     /**
@@ -136,7 +136,7 @@ public class Polygon implements Collection {
      */
     @Override
     public Object[] toArray() {
-        return points.toArray();
+        return edges.toArray();
     }
 
     /**
@@ -174,7 +174,7 @@ public class Polygon implements Collection {
      */
     @Override
     public boolean add(Object o) {
-        return points.add((Edge) o);
+        return edges.add((Edge) o);
     }
 
     /**
@@ -199,7 +199,7 @@ public class Polygon implements Collection {
      */
     @Override
     public boolean remove(Object o) {
-        return points.remove(o);
+        return edges.remove(o);
     }
 
     /**
@@ -228,7 +228,7 @@ public class Polygon implements Collection {
      */
     @Override
     public boolean addAll(Collection c) {
-        return points.addAll(c);
+        return edges.addAll(c);
     }
 
     /**
@@ -316,7 +316,7 @@ public class Polygon implements Collection {
      */
     @Override
     public Spliterator spliterator() {
-        return points.spliterator();
+        return edges.spliterator();
     }
 
     /**
@@ -334,7 +334,7 @@ public class Polygon implements Collection {
      */
     @Override
     public Stream stream() {
-        return points.stream();
+        return edges.stream();
     }
 
     /**
@@ -354,7 +354,7 @@ public class Polygon implements Collection {
      */
     @Override
     public Stream parallelStream() {
-        return points.parallelStream();
+        return edges.parallelStream();
     }
 
     /**
@@ -381,7 +381,7 @@ public class Polygon implements Collection {
      */
     @Override
     public boolean retainAll(Collection c) {
-        return points.retainAll(c);
+        return edges.retainAll(c);
     }
 
     /**
@@ -409,7 +409,7 @@ public class Polygon implements Collection {
      */
     @Override
     public boolean removeAll(Collection c) {
-        return points.removeAll(c);
+        return edges.removeAll(c);
     }
 
     /**
@@ -432,7 +432,7 @@ public class Polygon implements Collection {
      */
     @Override
     public boolean containsAll(Collection c) {
-        return points.containsAll(c);
+        return edges.containsAll(c);
     }
 
     /**
@@ -479,6 +479,6 @@ public class Polygon implements Collection {
      */
     @Override
     public Object[] toArray(Object[] a) {
-        return points.toArray(a);
+        return edges.toArray(a);
     }
 }
