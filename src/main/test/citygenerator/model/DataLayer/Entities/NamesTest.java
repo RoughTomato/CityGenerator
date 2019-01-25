@@ -47,4 +47,12 @@ public class NamesTest {
         name.setType(NameTypes.STORE);
         assertThat(name.getType(), is(NameTypes.STORE));
     }
+
+    @Test
+    public void setNameTest() {
+        Names name = this.entityManager.persistAndFlush(testName2);
+        name.setName("anotherName");
+        assertThat(name.getName(), is("anotherName"));
+    }
+
 }
