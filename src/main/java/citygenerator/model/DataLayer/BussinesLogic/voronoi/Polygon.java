@@ -68,14 +68,13 @@ public class Polygon implements Collection {
      */
     @Override
     public boolean contains(Object o) {
-        Edge test = (Edge) o;
         boolean status = false;
-        if(test.equals(this.site)) {
+        if(o.equals(this.site)) {
             status = true;
         }
         else {
-            for(Edge e : edges) {
-                if(test.equals(e)){
+            for(Object edge : edges) {
+                if(o.equals(edge)){
                     status = true;
                 }
             }
