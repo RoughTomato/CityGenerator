@@ -50,7 +50,7 @@ public class PolygonGeneratorTest {
 //    }
 
     @Test
-    public void generatePolygonsNotEmpty() {
+    public void generatePolygonsNotEmptyTest() {
         assertThat(pg.generatePolygons().isEmpty(), Matchers.is(false));
     }
 }

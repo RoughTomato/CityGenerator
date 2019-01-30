@@ -1,8 +1,12 @@
 package citygenerator.model.DataLayer.BussinesLogic.mapgenerator;
 
+import citygenerator.model.DataLayer.BussinesLogic.colliders.Corner;
+import citygenerator.model.DataLayer.BussinesLogic.colliders.Corners;
+
 public class Building {
 
     private BuildingTypes builidingType;
+    private Corners corners;
     private int x;
     private int y;
     private int w;
@@ -54,6 +58,18 @@ public class Building {
 
     public void setH(int h) {
         this.h = h;
+    }
+
+    public Corner getCorner(int index) {
+        Corner corner = null;
+        if(index < 4){
+            corner = (Corner) corners.get(index);
+        }
+        return corner;
+    }
+
+    private void convertCoordinatesToCorners(){
+        
     }
 
     @Override

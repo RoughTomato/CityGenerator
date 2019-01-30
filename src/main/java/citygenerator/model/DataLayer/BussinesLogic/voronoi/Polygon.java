@@ -481,4 +481,5 @@ public class Polygon implements Collection {
     public Object[] toArray(Object[] a) {
         return edges.toArray(a);
     }
+
 }
