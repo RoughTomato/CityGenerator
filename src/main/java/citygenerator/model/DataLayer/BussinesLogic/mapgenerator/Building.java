@@ -18,6 +18,7 @@ public class Building {
         this.y = y;
         this.w = w;
         this.h = h;
+        convertCoordinatesToCorners();
     }
 
     public BuildingTypes getBuilidingType() {
@@ -68,8 +69,24 @@ public class Building {
         return corner;
     }
 
+    /**
+     * Since assumption is that buildings will ALWAYS be
+     * rectangular we can simply calculate corners as follows:
+     *
+     *  x+1/2h,y-1/2w   x+1/2h,y-1/2w
+     *   A *------------* B
+     *     |            |
+     *     |     *      |
+     *     |    (x,y)   |
+     *   C *------------* D
+     *  x-1/2h,y-1/2w   x-1/2h,y+1/2w
+     *
+     * */
     private void convertCoordinatesToCorners(){
-        
+        corners.add(new Corner( (x+(0.5*h)), (y-(0.5*w)) ));
+        corners.add(new Corner( (x+(0.5*h)), (y-(0.5*w)) ));
+        corners.add(new Corner( (x-(0.5*h)), (y-(0.5*w)) ));
+        corners.add(new Corner( (x-(0.5*h)), (y+(0.5*w)) ));
     }
 
     @Override
@@ -80,6 +97,10 @@ public class Building {
                 ", y=" + y +
                 ", w=" + w +
                 ", h=" + h +
+                ", A=" + corners.get(0) +
+                ", B=" + corners.get(1) +
+                ", C=" + corners.get(2) +
+                ", D=" + corners.get(3) +
                 '}';
     }
 }
