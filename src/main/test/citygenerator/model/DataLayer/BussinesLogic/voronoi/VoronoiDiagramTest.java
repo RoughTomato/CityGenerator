@@ -38,13 +38,13 @@ public class VoronoiDiagramTest {
     public ExpectedException expectedNull = ExpectedException.none();
 
     @Test
-    public void generateEdgeStream() {
+    public void generateEdgeStreamTest() {
         Stream<Edge> actual = voronoi.generateEdgeStream();
         assertThat(actual, notNullValue());
     }
 
     @Test
-    public void testEdgePair() {
+    public void testEdgePairTest() {
         Point[] p = new Point[2];
         Point[] expected = new Point[2];
         expected[0] = new Point(92.1890756302521,50.23949579831934);
@@ -69,7 +69,7 @@ public class VoronoiDiagramTest {
     }
 
     @Test
-    public void generateWhenPointsAreNull() throws Exception{
+    public void generateWhenPointsAreNullTest() throws Exception{
         expectedNull.expect(NullPointerException.class);
         voronoi = new VoronoiDiagram(null);
     }

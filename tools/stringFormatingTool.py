@@ -7,21 +7,20 @@ outputname="out.txt"
 outputType="array"
 
 spliter= ' '
-outTypeOpening="\""
-outTypeCloseing="\""
 
-def selectType(outType):
-    def array():
-        outTypeOpening="\"" #lgtm [py/unused-local-variable]
-        outTypeCloseing="\"" #lgtm [py/unused-local-variable]
-    def sql():
-        outTypeOpening="(\'" #lgtm [py/unused-local-variable]
-        outTypeClosing="\')" #lgtm [py/unused-local-variable]
+def selectType(typeName,string):
+    def array(string):
+        return "\"" + string + "\","
+    def sql(string):
+        return "(\'" + string +"\'),"
+    def xml(string):
+        return "<entry key=\"testName\">" + string + "</entry>\n"
     typeDic = {
-        "array" : array,
-        "sql" : sql,
+        "array" : array(string),
+        "sql" : sql(string),
+        "xml" : xml(string),
     }
-    return typeDic[outType]()
+    return typeDic[typeName]
 
 def fileLines(filename):
     with open(filename) as f:
@@ -33,7 +32,7 @@ parser.add_argument("-f", "--file", dest="file",
 parser.add_argument("-o", "--out", dest="output",
         help="output file", metavar="OUTPUT")
 parser.add_argument("-t", "--type", dest="type",
-        help="type of output, acceptable types are:\narray\nsql",
+        help="type of output, acceptable types are:\narray\nsql\nxml",
         metavar="TYPE")
 parser.add_argument("-s", "--spliter", dest="spliter",
         help="character betwin two strings e.g. \"|\" default space.",
@@ -56,14 +55,14 @@ if os.path.isfile(filename):
     if(spliter == 'newline'):
         with open(filename) as fp:
             for i in range(fileLines(filename)-1):
-                finalString += outTypeOpening + fp.readline().strip().lower() + outTypeCloseing + ","
+                finalString += selectType(outputType,fp.readline().strip().lower())
     else:
         file = open(filename,"r")
         holder = file.read()
         array = holder.split(spliter)
         for i in range(len(array)-2):
-            finalString += outTypeOpening + array[i].lower() + outTypeCloseing + ","
-        finalString += outTypeOpening + array[len(array)-1].lower() + outTypeCloseing + ","
+            finalString += selectType(outputType,array[i].lower())
+        finalString += selectType(outputType,array[len(array)-1].lower())
 
     file = open(outputname, "w")
     file.write(finalString)
