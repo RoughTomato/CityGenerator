@@ -1,6 +1,7 @@
 ![travis build](https://travis-ci.org/RoughTomato/CityGenerator.svg?branch=master)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![codecov](https://codecov.io/gh/RoughTomato/CityGenerator/branch/master/graph/badge.svg)](https://codecov.io/gh/RoughTomato/CityGenerator)
+[![Maintainability](https://api.codeclimate.com/v1/badges/e80a10d5e9d11fcf5d51/maintainability)](https://codeclimate.com/github/RoughTomato/CityGenerator/maintainability)
 [![Language grade: Java](https://img.shields.io/lgtm/grade/java/g/RoughTomato/CityGenerator.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/RoughTomato/CityGenerator/context:java)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/RoughTomato/CityGenerator.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/RoughTomato/CityGenerator/alerts/)
 
