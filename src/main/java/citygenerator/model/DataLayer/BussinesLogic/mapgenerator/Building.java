@@ -13,12 +13,13 @@ public class Building {
     private int h;
 
     public Building(BuildingTypes buildingType, int x, int y, int w, int h) {
+        this.corners = new Corners();
         this.builidingType = buildingType;
         this.x = x;
         this.y = y;
         this.w = w;
         this.h = h;
-        convertCoordinatesToCorners();
+        this.convertCoordinatesToCorners();
     }
 
     public BuildingTypes getBuilidingType() {
@@ -74,19 +75,19 @@ public class Building {
      * rectangular we can simply calculate corners as follows:
      *
      *  x+1/2h,y-1/2w   x+1/2h,y-1/2w
-     *   A *------------* B
-     *     |            |
-     *     |     *      |
-     *     |    (x,y)   |
-     *   C *------------* D
+     *   A *-------------* B
+     *     |             |
+     *     |      *      |
+     *     |     (x,y)   |
+     *   C *-------------* D
      *  x-1/2h,y-1/2w   x-1/2h,y+1/2w
      *
      * */
-    private void convertCoordinatesToCorners(){
-        corners.add(new Corner( (x+(0.5*h)), (y-(0.5*w)) ));
-        corners.add(new Corner( (x+(0.5*h)), (y-(0.5*w)) ));
-        corners.add(new Corner( (x-(0.5*h)), (y-(0.5*w)) ));
-        corners.add(new Corner( (x-(0.5*h)), (y+(0.5*w)) ));
+    private void convertCoordinatesToCorners() {
+        corners.add(new Corner( (this.x+(0.5*this.h)), (this.y-(0.5*this.w)) ));
+        corners.add(new Corner( (this.x+(0.5*this.h)), (this.y+(0.5*this.w)) ));
+        corners.add(new Corner( (this.x-(0.5*this.h)), (this.y-(0.5*this.w)) ));
+        corners.add(new Corner( (this.x-(0.5*this.h)), (this.y+(0.5*this.w)) ));
     }
 
     @Override
