@@ -7,7 +7,9 @@ import routes from './routes/index';
 const app = express();
 
 // change to 127.0.0.1 if running outside of docker.
-mongoose.connect('mongodb://host.docker.internal:21017/database');
+// mongoose.connect('mongodb://host.docker.internal:21017/');
+
+mongoose.connect('mongodb://localhost/cities');
 
 /**
 * Middleware

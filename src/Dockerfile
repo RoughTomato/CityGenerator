@@ -3,6 +3,6 @@ WORKDIR /usr/app
 COPY package.json ./
 RUN npm install
 COPY . ./
-CMD node index.js
+CMD node start
 EXPOSE 8081
 

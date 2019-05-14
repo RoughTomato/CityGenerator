@@ -3,9 +3,9 @@ import mongoose, {
 } from 'mongoose';
 
 /**
- * Create database scheme for notes
+ * Create database scheme for words
  */
-const NoteScheme = new Schema({
+const WordScheme = new Schema({
   word: {
     type: String,
     required: 'What is the word?',
@@ -16,4 +16,4 @@ const NoteScheme = new Schema({
   },
 });
 
-export default mongoose.model('Words', NoteScheme);
+export default mongoose.model('Words', WordScheme);
