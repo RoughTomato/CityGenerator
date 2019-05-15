@@ -1,0 +1,35 @@
+{
+  "name": "citygenerator",
+  "version": "0.0.1",
+  "description": "Generates cities for D&D like games.",
+  "main": "index.js",
+  "repository": "https://github.com/RoughTomato/CityGenerator",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "d3-delaunay": "^4.1.5",
+    "express": "^4.16.4",
+    "foswig": "^1.1.1",
+    "markov-chain-js": "^1.0.2",
+    "mongoose": "^5.4.22",
+    "node": "^11.12.0",
+    "voronoi": "^1.0.0",
+    "voronoi-diagram": "^1.0.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "nodemon": "^1.18.10"
+  },
+  "scripts": {
+    "start": "nodemon server.js --exec babel-node --presets env",
+    "release": "npm run clean && npm run build && npm run serve",
+    "clean": "rm -rf dist && mkdir dist",
+    "build": "babel . -s -D -d dist --presets env --ignore node_modules",
+    "serve": "node dist/server.js"
+  },
+  "author": "RoughTomato",
+  "license": "MIT"
+}
