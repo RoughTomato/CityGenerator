@@ -1,22 +1,25 @@
-language: java
-install: true
-
+dist: trusty
+addons:
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
+language: node_js
+node_js:
+  - "11"
+env:
+  - CXX=g++-4.8
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
+before_install:
+  - npm i -g npm@6.9.0
+services:
+  - mongodb
 install:
-        - gradle wrapper --gradle-version 4.2
-        - ./gradlew assemble
-jdk:
-        - oraclejdk8
-script:
-        - ./gradlew test
-        - ./gradlew jacocoTestReport
-        - mkdir -p build/reports/jacoco/
-        - bash <(curl -s https://codecov.io/bash)
-        - ./gradlew bootJar
-before_cache:
-          - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-          - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-
-cache:
-          directories:
-                      - $HOME/.gradle/caches/
-                      - $HOME/.gradle/wrapper/
+  - cd ./src
+  - npm install
