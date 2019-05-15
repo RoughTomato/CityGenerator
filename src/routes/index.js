@@ -1,6 +1,8 @@
 import markov from '../controllers/markovController';
 import voronoi from '../controllers/voronoiController';
 import npc from '../controllers/npcController';
+import stat from '../controllers/statController';
+import abilities from '../controllers/abilitiesController';
 
 export default (app) => {
   app.route('api/v1/markov')
