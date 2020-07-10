@@ -9,7 +9,11 @@ const app = express();
 // change to 127.0.0.1 if running outside of docker.
 // mongoose.connect('mongodb://host.docker.internal:21017/');
 
-mongoose.connect('mongodb://localhost/cities');
+mongoose.connect('mongodb://127.0.0.1/cities').then(() => {
+  console.log("connected to the database");
+}).catch((err) => {
+  console.log("Couldn't connect to the database: " + err);
+});
 
 /**
 * Middleware

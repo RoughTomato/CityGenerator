@@ -21,6 +21,10 @@ Features consist of:
 - MongoDB (listening on port 21017) # [issue #16](https://github.com/RoughTomato/CityGenerator/issues/16)
 
 ## Getting started
+### Setting up Mongodb in a container
+Simply run:
+`docker run -it -v /data/db:/mongodata -p 27017:27017 --name mongodb -d mongo`
+
 ### Locally
 - Set up repostiory and download dependencies: `npm install`
 - Build and run dev: `npm start`
