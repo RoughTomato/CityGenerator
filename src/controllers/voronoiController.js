@@ -13,7 +13,18 @@ exports.generate = (req, res) => {
   // in diagram.cells.
 
   const diagram = voronoi.compute(sites, bbox);
+
+  console.log("Edges:");
   console.log(diagram.edges);
+
+  diagram.cells.forEach((cell) => {
+    console.log("cell:");
+    console.log(cell);
+    cell.halfedges.forEach((halfedge) => {
+      console.log("halfedge:");
+      console.log(halfedge);
+    })
+  });
 
   res.json({ code: 200 });
 };
